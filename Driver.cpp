@@ -172,6 +172,27 @@ void board5(FlowGrid &flowGrid){
     flowGrid.addSource(7,1, Maroon);
 }
 
+void board6(FlowGrid& flowGrid){
+    flowGrid.addSource(2,7, Yellow);
+    flowGrid.addSource(3,1, Cyan);
+    flowGrid.addSource(3,2, Yellow);
+    flowGrid.addSource(3,8, Cyan);
+    flowGrid.addSource(4,1, Orange);
+    flowGrid.addSource(4,5, Green);
+    flowGrid.addSource(4,6, Purple);
+    flowGrid.addSource(4,8, Blue);
+    flowGrid.addSource(5,5, Pink);
+    flowGrid.addSource(6,2, Red);
+    flowGrid.addSource(6,3, Purple);
+    flowGrid.addSource(6,4, Pink);
+    flowGrid.addSource(7,9, Maroon);
+    flowGrid.addSource(8,1, Green);
+    flowGrid.addSource(8,3, Orange);
+    flowGrid.addSource(8,9, Blue);
+    flowGrid.addSource(9,1, Maroon);
+    flowGrid.addSource(9,9, Red);
+}
+
 int main(int argc, char* argv[]){
     /*
     int height, width;
@@ -186,8 +207,8 @@ int main(int argc, char* argv[]){
     }
     */
 
-    FlowGrid flowGrid(9,9);
-    board5(flowGrid);
+    FlowGrid flowGrid(10,10);
+    board6(flowGrid);
 
     displayGrid(flowGrid);
 
