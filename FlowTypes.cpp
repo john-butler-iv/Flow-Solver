@@ -6,8 +6,8 @@ Direction OppositeDirection(Direction dir) {
     return (Direction) (((int) dir + 2) % NUM_DIRECTIONS);
 }
 
-std::string FlowColorName(FlowColor color){
-    switch(color){
+std::string FlowColorName(FlowColor color) {
+    switch(color) {
         case Uncolored:
             return "uncolored";
         case Red:
@@ -40,5 +40,5 @@ std::string FlowColorName(FlowColor color){
             return "dark blue";
         default:
             return "";
-            }
+    }
 }

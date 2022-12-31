@@ -4,7 +4,7 @@
 #include <string>
 
 #include "FlowGrid.h"
-//#include "FlowGraphics.h"
+#include "FlowGraphics.h"
 
 using namespace std;
 
@@ -17,19 +17,19 @@ bool getIntsCore(int &value1, int &value2, string query){
 
     cin >> value1Raw >> value2Raw;
 
-    value1 = stoi(value1Raw);
-    value2 = stoi(value2Raw);
+    value1 = stoi("0" + value1Raw);
+    value2 = stoi("0" + value2Raw);
     return true;
 }
 
-void getInts(int &value1, int &value2, string query, string errMsg){
+void getInts(int &value1, int &value2, string query, string errMsg) {
     if(errMsg == "") errMsg = "That was an invalid pair of numbers.";
-    while(!getIntsCore(value1, value2, query)){
+    while(!getIntsCore(value1, value2, query)) {
         cout << errMsg << endl;
     }
 }
 
-bool getBoolCore(bool &value, string query){
+bool getBoolCore(bool &value, string query) {
     cout << query << endl
             << " - ";
 
@@ -94,14 +94,33 @@ bool getSourcePts(struct Point &sourceA, struct Point &sourceB){
 
 
 int main(int argc, char* argv[]){
+    /*
     int height, width;
     getHeightWidth(height, width);
     FlowGrid flowGrid(height, width);
 
     struct Point ptA, ptB;
     int currentColor = ((int) Uncolored) + 1;
-    while(currentColor <= (int) DarkBlue && getSourcePts(ptA, ptB)){
+    while(currentColor <= (int) DarkBlue && getSourcePts(ptA, ptB)) {
         flowGrid.addSource(ptA.x, ptA.y, (FlowColor) currentColor);
         flowGrid.addSource(ptB.x, ptB.y, (FlowColor) currentColor);
     }
+    */
+
+    FlowGrid flowGrid(5,5);
+
+    flowGrid.addSource(0,0, Red);
+    flowGrid.addSource(1,4, Red);
+    flowGrid.addSource(2,0, Green);
+    flowGrid.addSource(1,3, Green);
+    flowGrid.addSource(2,1, Blue);
+    flowGrid.addSource(2,4, Blue);
+    flowGrid.addSource(4,0, Yellow);
+    flowGrid.addSource(3,3, Yellow);
+    flowGrid.addSource(4,1, Orange);
+    flowGrid.addSource(3,4, Orange);
+
+    flowGrid.solve();
+
+    displayGrid(flowGrid);
 }
