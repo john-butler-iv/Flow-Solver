@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <iostream>
 #include <memory>
+#include <vector>
 
 #include "FlowTypes.h"
 #include "FlowTile.h"
@@ -21,7 +22,6 @@ FlowTile::FlowTile() {
 
     tail = sharedThis;
 
-    std::cout << "FlowTile #" << uniqId << ": " << this << endl;
     for(int i = 0; i < NUM_DIRECTIONS; i++){
         connections[i] = nullptr;
     }
@@ -135,6 +135,7 @@ void FlowTile::physicallyConnect(shared_ptr<FlowTile> otherTile, Direction toOth
     Direction toThisTile = OppositeDirection(toOtherTile);
     assert(this -> connections[toOtherTile] == nullptr
             && otherTile -> connections[toThisTile] == nullptr);
+    
     assert(this->remainingConnections() != 0
             && otherTile->remainingConnections() != 0);
     this->connections[toOtherTile] = otherTile;
@@ -144,7 +145,6 @@ void FlowTile::physicallyConnect(shared_ptr<FlowTile> otherTile, Direction toOth
     // update tail pointers
     // we must be at the end of the chain to update tails
     assert(this-> tail != nullptr);
-    cout << this << " " << this-> tail <<  " " << this -> tail-> tail << " " << sharedThis << endl;
     assert(this-> tail-> tail == sharedThis);
     assert(otherTile-> tail != nullptr);
     assert(otherTile-> tail-> tail.get() == otherTile.get());
@@ -153,7 +153,7 @@ void FlowTile::physicallyConnect(shared_ptr<FlowTile> otherTile, Direction toOth
     assert(this-> tail != otherTile);
     assert(otherTile-> tail != sharedThis);
 
-    if (this->tail.get() == this){
+    if (this->tail == sharedThis){
         this-> tail-> tail = otherTile-> tail;
         otherTile-> tail -> tail = sharedThis;
     } else {
@@ -163,8 +163,48 @@ void FlowTile::physicallyConnect(shared_ptr<FlowTile> otherTile, Direction toOth
     // tail pointers in the middle of the chain don't have any meaning, so we don't have to update them.
 }
 
+vector<shared_ptr<FlowTile> > FlowTile::getCurrentChain(){
+    assert(totalConnections() < 2);
+
+    vector<shared_ptr<FlowTile> > currentChain;
+
+    const int MAX_TILES = counter;
+    bool visitedTiles[MAX_TILES];
+    for(int i = 0; i < MAX_TILES; i++){
+        visitedTiles[i] = false;
+    }
+
+    shared_ptr<FlowTile> tracer = nullptr;
+    shared_ptr<FlowTile> nextTile = sharedThis;
+    do {
+        tracer = nextTile;
+        currentChain.push_back(tracer);
+        visitedTiles[tracer->getUniqId()] = true;
+        nextTile = nullptr;
+
+
+        for(int dir = 0; dir < NUM_DIRECTIONS; dir++){
+            shared_ptr<FlowTile> connectedTile = tracer-> getConnection((Direction) dir);
+            if(connectedTile != nullptr && !visitedTiles[connectedTile->getUniqId()]){
+                assert(nextTile == nullptr);
+                nextTile = connectedTile;
+            }
+        }
+    } while (nextTile != nullptr);
+    
+    return currentChain;
+}
+
 bool FlowTile::getIsSource(){
     return isSource;
 } 
+
+int FlowTile::getUniqId(){
+    return uniqId;
+}
+
+shared_ptr<FlowTile> FlowTile::getTailPointer(){
+    return tail;
+}
 
 int FlowTile::counter = 0;

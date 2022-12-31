@@ -13,7 +13,14 @@ private:
     std::unique_ptr<FlowTile[]> grid;
 
     int index(int r, int c);
+    int offsetRawIndex(int i, Direction dir);
     int indexOffset(int r, int c, Direction dir);
+
+    bool wouldCreateLoop(std::shared_ptr<FlowTile> currentTile, std::shared_ptr<FlowTile> neighborTile);
+    bool validDirection(std::shared_ptr<FlowTile> currentTile, std::shared_ptr<FlowTile> neighborTile, Direction dir);
+
+    bool doForcedMove(int r, int c);
+    bool joinAdjacentColors(int r, int c);
 public:
     /**
      * Creates a blank flow grid for you to populate
@@ -23,8 +30,12 @@ public:
     /**
      * Marks a particular tile as a source of the given color
      */
-    void addSource(int x, int y, FlowColor color);
+    void addSource(int r, int c, FlowColor color);
 
+    std::shared_ptr<FlowTile> getPointer(int r, int c);
+
+    std::shared_ptr<FlowTile> getPointerRelative(int r, int c, Direction dir);
+    
 
     void solve();
 

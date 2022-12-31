@@ -1,4 +1,5 @@
 #include <memory>
+#include <vector>
 
 #include "FlowTypes.h"
 
@@ -78,12 +79,18 @@ public:
      */
     const std::shared_ptr<FlowTile> getConnection(Direction dir);
 
+    std::vector<std::shared_ptr<FlowTile> > getCurrentChain();
+
     /**
      * Simple getter for the color of this FlowTile.
      */
     const FlowColor getColor();
     
     bool getIsSource();
+
+    int getUniqId();
+
+    std::shared_ptr<FlowTile> getTailPointer();
 
     /**
      * Calculates the number of connections remaining until this tile is full. This will return

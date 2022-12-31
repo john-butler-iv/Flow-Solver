@@ -93,6 +93,85 @@ bool getSourcePts(struct Point &sourceA, struct Point &sourceB){
 
 
 
+void board1(FlowGrid &flowGrid){
+    flowGrid.addSource(0,0, Red);
+    flowGrid.addSource(4,1, Red);
+    flowGrid.addSource(0,2, Green);
+    flowGrid.addSource(3,1, Green);
+    flowGrid.addSource(1,2, Blue);
+    flowGrid.addSource(4,2, Blue);
+    flowGrid.addSource(0,4, Yellow);
+    flowGrid.addSource(3,3, Yellow);
+    flowGrid.addSource(1,4, Orange);
+    flowGrid.addSource(4,3, Orange);
+}
+
+void board2(FlowGrid &flowGrid){
+    flowGrid.addSource(0,0, Green);
+    flowGrid.addSource(0,1, Yellow);
+    flowGrid.addSource(0,2, Cyan);
+    flowGrid.addSource(0,4, Red);
+    flowGrid.addSource(0,5, Blue);
+    flowGrid.addSource(1,4, Orange);
+    flowGrid.addSource(2,2, Cyan);
+    flowGrid.addSource(3,2, Red);
+    flowGrid.addSource(4,0, Green);
+    flowGrid.addSource(4,2, Orange);
+    flowGrid.addSource(5,0, Yellow);
+    flowGrid.addSource(5,2, Blue);
+}
+
+void board3(FlowGrid &flowGrid){
+    flowGrid.addSource(0,6, Blue);
+    flowGrid.addSource(1,5, Orange);
+    flowGrid.addSource(1,6, Red);
+    flowGrid.addSource(2,1, Orange);
+    flowGrid.addSource(3,3, Green);
+    flowGrid.addSource(3,4, Cyan);
+    flowGrid.addSource(4,2, Green);
+    flowGrid.addSource(4,4, Yellow);
+    flowGrid.addSource(5,4, Red);
+    flowGrid.addSource(5,5, Yellow);
+    flowGrid.addSource(6,5, Blue);
+    flowGrid.addSource(6,6, Cyan);
+}
+
+void board4(FlowGrid &flowGrid){
+    flowGrid.addSource(0,4, Red);
+    flowGrid.addSource(1,4, Cyan);
+    flowGrid.addSource(1,6, Green);
+    flowGrid.addSource(1,7, Yellow);
+    flowGrid.addSource(2,4, Green);
+    flowGrid.addSource(2,5, Yellow);
+    flowGrid.addSource(2,7, Cyan);
+    flowGrid.addSource(3,3, Orange);
+    flowGrid.addSource(3,4, Blue);
+    flowGrid.addSource(4,4, Orange);
+    flowGrid.addSource(5,4, Blue);
+    flowGrid.addSource(7,1, Red);
+}
+
+void board5(FlowGrid &flowGrid){
+    flowGrid.addSource(1,1, Red);
+    flowGrid.addSource(1,2, Cyan);
+    flowGrid.addSource(1,3, Blue);
+    flowGrid.addSource(2,3, Cyan);
+    flowGrid.addSource(2,4, Orange);
+    flowGrid.addSource(2,6, Orange);
+    flowGrid.addSource(2,7, Blue);
+    flowGrid.addSource(3,7, Pink);
+    flowGrid.addSource(4,1, Green);
+    flowGrid.addSource(4,3, Green);
+    flowGrid.addSource(4,4, Red);
+    flowGrid.addSource(5,0, Yellow);
+    flowGrid.addSource(5,1, Pink);
+    flowGrid.addSource(5,7, Maroon);
+    flowGrid.addSource(5,8, Purple);
+    flowGrid.addSource(6,1, Purple);
+    flowGrid.addSource(6,2, Yellow);
+    flowGrid.addSource(7,1, Maroon);
+}
+
 int main(int argc, char* argv[]){
     /*
     int height, width;
@@ -107,18 +186,10 @@ int main(int argc, char* argv[]){
     }
     */
 
-    FlowGrid flowGrid(5,5);
+    FlowGrid flowGrid(9,9);
+    board5(flowGrid);
 
-    flowGrid.addSource(0,0, Red);
-    flowGrid.addSource(1,4, Red);
-    flowGrid.addSource(2,0, Green);
-    flowGrid.addSource(1,3, Green);
-    flowGrid.addSource(2,1, Blue);
-    flowGrid.addSource(2,4, Blue);
-    flowGrid.addSource(4,0, Yellow);
-    flowGrid.addSource(3,3, Yellow);
-    flowGrid.addSource(4,1, Orange);
-    flowGrid.addSource(3,4, Orange);
+    displayGrid(flowGrid);
 
     flowGrid.solve();
 

@@ -1,10 +1,14 @@
 CC = g++
 CFLAGS = -g -Wall -O2
+TARGET = Flow
+
+run: Flow
+	./$(TARGET)
 
 Make: Flow
 
 Flow: Driver.o FlowGraphics.o FlowGrid.o FlowTile.o FlowTypes.o
-	$(CC) $(CFLAGS) -o Flow Driver.o FlowGraphics.o FlowGrid.o FlowTile.o FlowTypes.o
+	$(CC) $(CFLAGS) -o $(TARGET) Driver.o FlowGraphics.o FlowGrid.o FlowTile.o FlowTypes.o
 
 Driver.o: Driver.cpp FlowGrid.h FlowTypes.h FlowGraphics.h
 	$(CC) $(CFLAGS) -c Driver.cpp
@@ -23,4 +27,5 @@ FlowTypes.o: FlowTypes.cpp FlowTypes.h
 
 clean:
 	rm *.o
-	rm Flow
+	rm *.tmp
+	rm $(TARGET)
